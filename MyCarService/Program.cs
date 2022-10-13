@@ -20,6 +20,8 @@ builder.Services.AddTransient<IModelRepository, ModelRepository>();
 builder.Services.AddTransient<IMakeRepository, MakeRepository>();
 builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
+builder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
+
 
 
 

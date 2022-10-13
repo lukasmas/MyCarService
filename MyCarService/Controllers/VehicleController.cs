@@ -23,22 +23,6 @@ namespace MyCarService.Controllers
             return Ok(_unitOfWork.ModelRepository.GetAllCars());
         }
 
-        [Route("NewOwner")]
-        [HttpPost]
-        public ActionResult AddNewOwner(Owner owner)
-        {
-            _unitOfWork.OwnerRepository.Add(owner);
-            _unitOfWork.Complete();
-            return Ok();
-        }
-
-        [Route("Owners")]
-        [HttpGet]
-        public ActionResult GetAllOwners()
-        {
-            return Ok(_unitOfWork.OwnerRepository.GetAll());
-        }
-
         [Route("Vehicles/{ownerId}")]
         [HttpGet]
         public ActionResult GetAllVehicles(int ownerId)

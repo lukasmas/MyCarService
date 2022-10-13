@@ -18,6 +18,11 @@ namespace MyCarService.Repositories
         {
             _context.Set<T>().AddRange(entities);
         }
+
+        public void Update(T entity)
+        {
+            _context.Set<T>().Update(entity);
+        }
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
@@ -26,14 +31,9 @@ namespace MyCarService.Repositories
         {
             return _context.Set<T>().ToList();
         }
-        public T GetById(int id)
+        public T? GetById(int id)
         {
-            var result = _context.Set<T>().Find(id);
-            if(result == null)
-            {
-                return new T();
-            }
-            return result;
+            return _context.Set<T>().Find(id);
         }
 
         public void Remove(T entity)
@@ -44,5 +44,6 @@ namespace MyCarService.Repositories
         {
             _context.Set<T>().RemoveRange(entities);
         }
+
     }
 }

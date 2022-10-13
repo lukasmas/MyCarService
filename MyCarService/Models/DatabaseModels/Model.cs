@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyCarService.Models.Dto
+namespace MyCarService.Models.DatabaseModels
 {
     [Table("Model")]
-    public class ModelDto
+    public class Model
     {
         public int Id { get; set; }
         public string? Name { get; set; }

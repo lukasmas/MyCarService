@@ -17,6 +17,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<IModelRepository, ModelRepository>();
+builder.Services.AddTransient<IMakeRepository, MakeRepository>();
+builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
+builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
+
+
+
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 //services.AddTransient<IProjectRepository, ProjectRepository>();
 

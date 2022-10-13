@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyCarService.Models.Dto
+namespace MyCarService.Models.DatabaseModels
 {
     [Table("Make")]
 
-    public class MakeDto
+    public class Make
     {
         public int Id { get; set; }
         public string? Name { get; set; }

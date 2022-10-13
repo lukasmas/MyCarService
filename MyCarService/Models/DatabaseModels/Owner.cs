@@ -1,6 +1,6 @@
-﻿namespace MyCarService.Models.Dto
+﻿namespace MyCarService.Models.DatabaseModels
 {
-    public class OwnerDto
+    public class Owner
     {
         public int Id { get; set; }
         public string? Name { get; set; } 

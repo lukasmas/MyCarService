@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyCarService.Models.Dto;
+using MyCarService.Models.DatabaseModels;
 
 public class MyCarServiceContext : DbContext
 {
@@ -8,9 +8,11 @@ public class MyCarServiceContext : DbContext
     {
     }
 
-    //public DbSet<VehicleDto> Vehicle { get; set; }
-    public DbSet<MakeDto>? CarMake { get; set; }
-    public DbSet<ModelDto>? CarModel { get; set; }
-    public DbSet<OwnerDto>? Owner { get; set; }
+    public DbSet<Vehicle> Vehicle { get; set; }
+    public DbSet<Make> CarMake { get; set; }
+    public DbSet<Model> CarModel { get; set; }
+    public DbSet<Owner> Owner { get; set; }
+    public DbSet<Service> Service { get; set; }
+
 
 }

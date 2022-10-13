@@ -1,10 +1,10 @@
 ﻿using MyCarService.Interfaces;
 using MyCarService.Models;
-using MyCarService.Models.Dto;
+using MyCarService.Models.DatabaseModels;
 
 namespace MyCarService.Repositories
 {
-    public class ModelRepository : GenericRepository<ModelDto>, IModelRepository
+    public class ModelRepository : GenericRepository<Model>, IModelRepository
     {
 
         public ModelRepository(MyCarServiceContext context) : base(context)

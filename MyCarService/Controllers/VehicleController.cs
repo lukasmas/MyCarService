@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MyCarService.ErrorHandling;
 using MyCarService.Interfaces;
 using MyCarService.Models.DatabaseModels;
+using System.Net;
 using Service = MyCarService.Models.DatabaseModels.Service;
 
 namespace MyCarService.Controllers
@@ -9,37 +12,59 @@ namespace MyCarService.Controllers
     [Route("[controller]")]
     public class VehicleController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public VehicleController(IUnitOfWork unitOfWork)
+        private readonly IVehicleUnitOfWork _vehicleUnitOfWork;
+        public VehicleController(IVehicleUnitOfWork vehicleUnitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            _vehicleUnitOfWork = vehicleUnitOfWork;
         }
 
 
-        [Route("CarModels")]
-        [HttpGet]
-        public ActionResult GetCarModels()
+        [Route("add")]
+        [HttpPost]
+        public ActionResult Add(Vehicle vehicle)
         {
-            return Ok(_unitOfWork.ModelRepository.GetAllCars());
+            var result = _vehicleUnitOfWork.AddNewVehicle(vehicle);
+            if (result.IsFail())
+            {
+                return BadRequest(result.GetError());
+            }
+            return Ok(result.GetSuccess());
         }
 
-        [Route("Vehicles/{ownerId}")]
+        [Route("vehicles/{ownerId}")]
         [HttpGet]
         public ActionResult GetAllVehicles(int ownerId)
         {
-            return Ok(_unitOfWork.VehicleRepository.GetAllOwnerVehicles(ownerId));
+            return Ok(_vehicleUnitOfWork.VehicleRepository.GetAllOwnerVehicles(ownerId));
         }
 
-        [Route("Services/{vehicleId}")]
-        [HttpGet]
-        public IEnumerable<Service> GetVehicleServices(int vehicleId)
+        [Route("delete/{vehicleId}")]
+        [HttpDelete]
+        public ActionResult Delete(int vehicleId)
         {
-            return _unitOfWork.ServiceRepository.GetVehicleSerivces(vehicleId);
+            var vehicle = _vehicleUnitOfWork.VehicleRepository.GetById(vehicleId);
+            if (vehicle == null)
+            {
+                return new ObjectResult(HttpStatusCode.NotFound);
+            }
+            _vehicleUnitOfWork.VehicleRepository.Remove(vehicle);
+            _vehicleUnitOfWork.Complete();
+            return Ok();
         }
 
-
-
-
+        [Route("update/{vehicleId}/{newMillage}")]
+        [HttpPut]
+        public ActionResult UpdateMillage(int vehicleId, uint newMillage)
+        {
+            var vehicle = _vehicleUnitOfWork.VehicleRepository.GetById(vehicleId);
+            if(vehicle == null)
+            {
+                return new ObjectResult(HttpStatusCode.NotFound);
+            }
+            vehicle.CurrentMillage = newMillage;
+            _vehicleUnitOfWork.Complete();
+            return Ok();
+        }
 
     }
 }

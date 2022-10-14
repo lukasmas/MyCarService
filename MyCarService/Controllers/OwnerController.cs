@@ -27,7 +27,7 @@ namespace MyCarService.Controllers
         }
 
         [Route("update")]
-        [HttpPost]
+        [HttpPut]
         public ActionResult Update(Owner owner)
         {
             var tmpOwner = _unitOfWork.OwnerRepository.GetById(owner.Id);
@@ -40,6 +40,21 @@ namespace MyCarService.Controllers
             _unitOfWork.Complete();
 
             return Ok();
+        }
+
+        [Route("delete/{ownerId}")]
+        [HttpDelete]
+        public ActionResult Delete(int ownerId)
+        {
+            var owner = _unitOfWork.OwnerRepository.GetById(ownerId);
+            if (owner == null)
+            {
+                return new ObjectResult(HttpStatusCode.NotFound);
+            }
+            _unitOfWork.OwnerRepository.Remove(owner);
+            _unitOfWork.Complete();
+            return Ok();
+
         }
 
         [Route("get")]

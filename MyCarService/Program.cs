@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MyCarService.Interfaces;
 using MyCarService.Models;
 using MyCarService.Repositories;
+using MyCarService.UnitsOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,9 +24,9 @@ builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
 builder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
 
 
-
-
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IVehicleUnitOfWork, VehicleUnitOfWork>();
+
 //services.AddTransient<IProjectRepository, ProjectRepository>();
 
 var app = builder.Build();

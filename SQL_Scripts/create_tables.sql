@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS "Vehicle" (
    "OwnerId" int4 NOT NULL,
    "ModelId" int4 NOT NULL,
    "ProductionYear" int4,
-	"VIN" VARCHAR(30) UNIQUE,
-	"Plate" VARCHAR(10) UNIQUE,
+	"VIN" VARCHAR(30),
+	"Plate" VARCHAR(10),
 	"CurrentMillage" int8,
 	CONSTRAINT fk_model
       FOREIGN KEY("ModelId") 

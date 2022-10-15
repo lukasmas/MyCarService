@@ -5,6 +5,8 @@ using System.Net;
 
 namespace MyCarService.Controllers
 {
+    [ApiController]
+    [Route("service")]
     public class ServiceController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

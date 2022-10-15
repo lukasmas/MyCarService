@@ -6,11 +6,11 @@ namespace MyCarService.Models.DatabaseModels
     [Table("Vehicle")]
     public class Vehicle
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         [Required]
-        public int OwnerId { get; set; }
+        public long OwnerId { get; set; }
         [Required]
-        public int ModelId { get; set; }
+        public long ModelId { get; set; }
         [Range(1940,2022)]
         [Required]
         public int ProductionYear { get; set; }

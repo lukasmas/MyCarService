@@ -8,7 +8,7 @@ namespace MyCarService.Repositories
         public ServiceRepository(MyCarServiceContext context) : base(context)
         {
         }
-        public IEnumerable<Service> GetVehicleSerivces(int vehicleId) => Find(s => s.VehicleId == vehicleId);
+        public IEnumerable<Service> GetVehicleSerivces(long vehicleId) => Find(s => s.VehicleId == vehicleId);
 
     }
 }

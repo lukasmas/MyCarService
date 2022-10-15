@@ -14,14 +14,42 @@ namespace MyCarService.UnitsOfWork
         public IResult<Vehicle, Error> AddNewVehicle(Vehicle vehicle)
         {
             if (ModelRepository.GetById(vehicle.ModelId) == null)
-                return new Result<Vehicle, Error>(new Error("Model doesn't exist in database"));
+                return new Result<Vehicle, Error>(new Error("Bad modelId"));
             if (OwnerRepository.GetById(vehicle.OwnerId) == null)
-                return new Result<Vehicle, Error>(new Error("Model doesn't exist in database"));
-            
+                return new Result<Vehicle, Error>(new Error("Bad ownerId"));
+
             VehicleRepository.Add(vehicle);
             Complete();
 
-            return new Result<Vehicle,Error>(vehicle);
+            return new Result<Vehicle, Error>(vehicle);
         }
+
+        public IResult<Vehicle, Error> UpdateMillage(long vehicleId, uint newMillage)
+        {
+
+            var vehicle = VehicleRepository.GetById(vehicleId);
+            if (vehicle == null)
+            {
+                return new Result<Vehicle, Error>(new Error("Vehicle dosen't exits"));
+
+            }
+            vehicle.CurrentMillage = newMillage;
+            Complete();
+            return new Result<Vehicle, Error>(vehicle);
+        }
+
+        public IResult<Vehicle, Error> DeleteVehicle(long vehicleId)
+        {
+            var vehicle = VehicleRepository.GetById(vehicleId);
+            if (vehicle == null)
+            {
+                return new Result<Vehicle, Error>(new Error("Vehicle dosen't exits"));
+
+            }
+            VehicleRepository.Remove(vehicle);
+            Complete();
+            return new Result<Vehicle, Error>(vehicle);
+        }
+
     }
 }

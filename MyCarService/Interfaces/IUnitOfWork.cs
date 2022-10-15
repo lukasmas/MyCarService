@@ -7,7 +7,7 @@
         IOwnerRepository OwnerRepository { get; }
         IVehicleRepository VehicleRepository { get; }
         IServiceRepository ServiceRepository { get; }
-
+        IUserRepository UserRepository { get; }
         int Complete();
     }
 }

@@ -13,6 +13,8 @@ public class MyCarServiceContext : DbContext
     public DbSet<Model> CarModel { get; set; }
     public DbSet<Owner> Owner { get; set; }
     public DbSet<Service> Service { get; set; }
+    public DbSet<User> User { get; set; }
+
 
 
 }

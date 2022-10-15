@@ -4,7 +4,7 @@ namespace MyCarService.Interfaces
 {
     public interface IServiceRepository : IGenericRepository<Service>
     {
-        IEnumerable<Service> GetVehicleSerivces(int vehicleId);
+        IEnumerable<Service> GetVehicleSerivces(long vehicleId);
 
     }
 }

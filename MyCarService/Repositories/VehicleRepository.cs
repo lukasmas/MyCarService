@@ -9,7 +9,7 @@ namespace MyCarService.Repositories
         {
         }
 
-        public IEnumerable<Vehicle> GetAllOwnerVehicles(int ownerId) => Find(v => v.OwnerId == ownerId);
+        public IEnumerable<Vehicle> GetAllOwnerVehicles(long ownerId) => Find(v => v.OwnerId == ownerId);
 
     }
 }

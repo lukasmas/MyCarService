@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyCarService.Interfaces;
 using MyCarService.Models.DatabaseModels;
 using System.Net;
@@ -7,7 +8,7 @@ using System.Net;
 namespace MyCarService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("owner")]
     public class OwnerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -44,7 +45,7 @@ namespace MyCarService.Controllers
 
         [Route("delete/{ownerId}")]
         [HttpDelete]
-        public ActionResult Delete(int ownerId)
+        public ActionResult Delete(long ownerId)
         {
             var owner = _unitOfWork.OwnerRepository.GetById(ownerId);
             if (owner == null)
@@ -59,6 +60,7 @@ namespace MyCarService.Controllers
 
         [Route("get")]
         [HttpGet]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult Get()
         {
             return Ok(_unitOfWork.OwnerRepository.GetAll());

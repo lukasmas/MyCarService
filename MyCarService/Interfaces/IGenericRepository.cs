@@ -4,7 +4,7 @@ namespace MyCarService.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        T? GetById(int id);
+        T? GetById(long id);
         IEnumerable<T> GetAll();
         void Update(T entity);
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);

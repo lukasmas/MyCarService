@@ -49,3 +49,14 @@ CREATE TABLE IF NOT EXISTS "Service" (
 );
 
 -- INSERT INTO "Service"("VehicleId", "Millage", "ServiceDate","ServiceType", "Description", "InvoiceScan") VALUES(1, 225599, '2022-10-12','Wymiana oleju i filtrów', 'Wymiana oleju w silniku i skrzyni biegów, wymiana filtrów: powietrza, oleju, oleju w skrzyni biegów','')
+CREATE TABLE IF NOT EXISTS "User"(
+   "Id" int4 PRIMARY KEY Generated Always as Identity,
+   "Username" VARCHAR(20) NOT NULL UNIQUE,
+   "Password" VARCHAR(30) NOT NULL,
+   "Email" VARCHAR(30) NOT NULL UNIQUE,
+	"Salt" VARCHAR(32) NOT NULL,
+	"OwnerId" int4,
+	CONSTRAINT fk_user_owner
+      FOREIGN KEY("OwnerId") 
+	  REFERENCES "Owner"("Id")
+)

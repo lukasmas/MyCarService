@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyCarService.AuthService;
 using MyCarService.Interfaces;
-using MyCarService.Models;
+using MyCarService.Models.Auth;
 using MyCarService.Models.DatabaseModels;
 using MyCarService.Repositories;
 
@@ -20,22 +20,19 @@ namespace MyCarService.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult<AuthData> Register(UserTemplate user)
+        public ActionResult<AuthData> Register(UserRegistration user)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             if (user.Email == null) return BadRequest(new { email = "emial is not provided" });
             var emailUniq = _unitOfWork.UserRepository.IsEmailUniq(user.Email);
             if (!emailUniq) return BadRequest(new { email = "user with this email already exists" });
-            if (user.Username == null) return BadRequest(new { email = "username is not provided" });
-            var usernameUniq = _unitOfWork.UserRepository.IsUsernameUniq(user.Username);
-            if (!usernameUniq) return BadRequest(new { username = "user with this username already exists" });
             if (user.Password == null) return BadRequest(new { email = "Password is not provided" });
 
-            //var id = Guid.NewGuid().ToString();
+            var id = Guid.NewGuid().ToString();
             var newUser = new User
             {
-                Id = 0,
+                Id = id,
                 Username = user.Username,
                 Email = user.Email,
                 Salt = AuthSaltGenerator.GetUniqueKey(32),
@@ -54,11 +51,11 @@ namespace MyCarService.Controllers
                 return BadRequest(new { registery = "Registery has failed" });
             }
 
-            return _authService.GetAuthData(newUser.Id.ToString());
+            return _authService.GetAuthData(newUser.Id);
         }
 
         [HttpPost("login")]
-        public ActionResult<AuthData> Post(UserTemplate user)
+        public ActionResult<AuthData> Post(UserRegistration user)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -77,7 +74,7 @@ namespace MyCarService.Controllers
                 return BadRequest(new { password = "invalid password" });
             }
 
-            return _authService.GetAuthData(userByEmail.Id.ToString());
+            return _authService.GetAuthData(userByEmail.Id);
         }
     }
 }

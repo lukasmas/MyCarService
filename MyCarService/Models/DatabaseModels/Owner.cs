@@ -6,8 +6,8 @@ namespace MyCarService.Models.DatabaseModels
     {
         public long Id { get; set; }
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         [Required]
-        public string? Surname { get; set; }
+        public string Surname { get; set; } = string.Empty;
     }
 }

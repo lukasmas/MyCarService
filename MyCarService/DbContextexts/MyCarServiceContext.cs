@@ -7,13 +7,14 @@ public class MyCarServiceContext : DbContext
                : base(options)
     {
     }
+    public MyCarServiceContext() { }
 
-    public DbSet<Vehicle> Vehicle { get; set; }
-    public DbSet<Make> CarMake { get; set; }
-    public DbSet<Model> CarModel { get; set; }
-    public DbSet<Owner> Owner { get; set; }
-    public DbSet<Service> Service { get; set; }
-    public DbSet<User> User { get; set; }
+    public virtual DbSet<Vehicle>? Vehicle { get; set; } = null;
+    public virtual DbSet<Make>? CarMake { get; set; } = null;
+    public virtual DbSet<Model>? CarModel { get; set; } = null;
+    public virtual DbSet<Owner>? Owner { get; set; } = null;
+    public virtual DbSet<Service>? Service { get; set; } = null;
+    public virtual DbSet<User>? User { get; set; } = null;
 
 
 

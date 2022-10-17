@@ -1,4 +1,6 @@
-﻿namespace MyCarService.Interfaces
+﻿using MyCarService.Models.DatabaseModels;
+
+namespace MyCarService.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -9,5 +11,7 @@
         IServiceRepository ServiceRepository { get; }
         IUserRepository UserRepository { get; }
         int Complete();
+        public Owner GetOwnerById(long ownerId);
+
     }
 }

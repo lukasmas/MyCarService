@@ -1,4 +1,5 @@
 ﻿using MyCarService.Interfaces;
+using MyCarService.Models.DatabaseModels;
 using MyCarService.Repositories;
 
 public class UnitOfWork : IUnitOfWork
@@ -31,5 +32,10 @@ public class UnitOfWork : IUnitOfWork
     public void Dispose()
     {
         _context.Dispose();
+    }
+
+    public Owner GetOwnerById(long ownerId)
+    {
+        return OwnerRepository.GetById(ownerId);
     }
 }

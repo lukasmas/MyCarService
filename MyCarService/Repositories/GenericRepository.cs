@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace MyCarService.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly MyCarServiceContext _context;
         public GenericRepository(MyCarServiceContext context)

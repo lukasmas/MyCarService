@@ -11,10 +11,12 @@ namespace MyCarService.AuthService
     {
         readonly string jwtSecret;
         readonly int jwtLifespan;
+        Dictionary<string,string> tokenToId;
         public AuthService(string jwtSecret, int jwtLifespan)
         {
             this.jwtSecret = jwtSecret;
             this.jwtLifespan = jwtLifespan;
+            tokenToId = new Dictionary<string, string>();
         }
         public AuthData GetAuthData(string id)
         {
@@ -35,7 +37,7 @@ namespace MyCarService.AuthService
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-
+            tokenToId.Add(token, id);
             return new AuthData
             {
                 Token = token,
@@ -43,7 +45,6 @@ namespace MyCarService.AuthService
                 Id = id
             };
         }
-
         public string HashPassword(string password)
         {
             return Crypto.HashPassword(password);

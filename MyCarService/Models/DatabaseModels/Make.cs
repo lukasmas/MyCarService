@@ -7,7 +7,7 @@ namespace MyCarService.Models.DatabaseModels
     public class Make
     {
         public long Id { get; set; }
-        public string? Name { get; set; }
-        
+        public string Name { get; set; } = string.Empty;
+
     }
 }

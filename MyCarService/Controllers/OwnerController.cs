@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyCarService.Interfaces;
 using MyCarService.Models.DatabaseModels;
 using System.Net;
-
+using System.Security.Claims;
 
 namespace MyCarService.Controllers
 {
@@ -19,12 +19,23 @@ namespace MyCarService.Controllers
 
         [Route("add")]
         [HttpPost]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+
         public ActionResult Create(Owner owner)
         {
-            _unitOfWork.OwnerRepository.Add(owner);
-            _unitOfWork.Complete();
+            var user_id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            var user = _unitOfWork.UserRepository.Find(u => u.Id == user_id).First();
+            if(user.OwnerId == null)
+            {
+                _unitOfWork.OwnerRepository.Add(owner);
+                _unitOfWork.Complete();
+                user.OwnerId = owner.Id;
+                _unitOfWork.Complete();
+                return new ObjectResult(HttpStatusCode.Created);
+            }
 
-            return new ObjectResult(HttpStatusCode.Created);
+            return new ObjectResult(new { owner = "Owner already exist for a user" }) { StatusCode =(int) HttpStatusCode.BadRequest };
+
         }
 
         [Route("update")]
@@ -63,6 +74,8 @@ namespace MyCarService.Controllers
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult Get()
         {
+            var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            
             return Ok(_unitOfWork.OwnerRepository.GetAll());
         }
 

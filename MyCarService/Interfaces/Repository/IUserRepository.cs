@@ -1,6 +1,6 @@
 ﻿using MyCarService.Models.DatabaseModels;
 
-namespace MyCarService.Interfaces
+namespace MyCarService.Interfaces.Repository
 {
     public interface IUserRepository : IGenericRepository<User>
     {

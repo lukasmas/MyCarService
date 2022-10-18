@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace MyCarService.Interfaces
+namespace MyCarService.Interfaces.Repository
 {
     public interface IGenericRepository<T> where T : class
     {

@@ -1,4 +1,5 @@
-﻿using MyCarService.Interfaces;
+﻿using MyCarService.Interfaces.Repository;
+using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.DatabaseModels;
 using MyCarService.Repositories;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyCarService.ErrorHandling;
-using MyCarService.Interfaces;
+using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.DatabaseModels;
 using System.Net;
 
@@ -11,8 +11,8 @@ namespace MyCarService.Controllers
     [Route("vehicle")]
     public class VehicleController : Controller
     {
-        private readonly IVehicleUnitOfWork _vehicleUnitOfWork;
-        public VehicleController(IVehicleUnitOfWork vehicleUnitOfWork)
+        private readonly IVehicleUnit _vehicleUnitOfWork;
+        public VehicleController(IVehicleUnit vehicleUnitOfWork)
         {
             _vehicleUnitOfWork = vehicleUnitOfWork;
         }

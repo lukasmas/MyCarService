@@ -1,13 +1,12 @@
-﻿using MyCarService.Interfaces;
-using MyCarService.Models.DatabaseModels;
+﻿using MyCarService.Models.DatabaseModels;
 using MyCarService.ErrorHandling;
-
+using MyCarService.Interfaces.UnitOfWork;
 
 namespace MyCarService.UnitsOfWork
 {
-    public class VehicleUnitOfWork : UnitOfWork, IVehicleUnitOfWork
+    public class VehicleUnit : UnitOfWork, IVehicleUnit
     {
-        public VehicleUnitOfWork(MyCarServiceContext context) : base(context)
+        public VehicleUnit(MyCarServiceContext context) : base(context)
         {
         }
 

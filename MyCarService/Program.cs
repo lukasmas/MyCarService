@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MyCarService.AuthService;
-using MyCarService.Interfaces;
+using MyCarService.AuthServices;
+using MyCarService.Interfaces.Auth;
+using MyCarService.Interfaces.Repository;
+using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Repositories;
 using MyCarService.UnitsOfWork;
 using System.Text;
@@ -28,7 +30,9 @@ builder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-builder.Services.AddTransient<IVehicleUnitOfWork, VehicleUnitOfWork>();
+builder.Services.AddTransient<IVehicleUnit, VehicleUnit>();
+builder.Services.AddTransient<IAuthUnit, AuthUnit>();
+
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

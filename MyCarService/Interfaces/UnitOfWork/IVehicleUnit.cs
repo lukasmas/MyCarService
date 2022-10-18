@@ -2,9 +2,9 @@
 using MyCarService.ErrorHandling;
 
 
-namespace MyCarService.Interfaces
+namespace MyCarService.Interfaces.UnitOfWork
 {
-    public interface IVehicleUnitOfWork : IUnitOfWork
+    public interface IVehicleUnit : IUnitOfWork
     {
         public IResult<Vehicle, Error> AddNewVehicle(Vehicle vehicle);
 

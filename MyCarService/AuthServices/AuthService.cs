@@ -3,9 +3,9 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Web.Helpers;
-using MyCarService.Interfaces;
+using MyCarService.Interfaces.Auth;
 
-namespace MyCarService.AuthService
+namespace MyCarService.AuthServices
 {
     public class AuthService : IAuthService
     {

@@ -16,24 +16,12 @@
         private readonly TSuccess? _success;
         private readonly TError? _error;
 
-        public bool IsFail()
-        {
-            return _success == null;
-        }
+        public bool IsFail() => !IsSuccess();
 
-        public bool IsSuccess()
-        {
-            return _success != null;
+        public bool IsSuccess() => _success != null;
 
-        }
+        public TError? GetError() => _error;
 
-        public TError? GetError()
-        {
-            return _error;
-        }
-        public TSuccess? GetSuccess()
-        {
-            return _success;
-        }
+        public TSuccess? GetSuccess() => _success;  
     }
 }

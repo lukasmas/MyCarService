@@ -1,4 +1,4 @@
-﻿using MyCarService.Interfaces;
+﻿using MyCarService.Interfaces.Repository;
 using System.Linq.Expressions;
 
 namespace MyCarService.Repositories

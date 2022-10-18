@@ -1,4 +1,4 @@
-﻿namespace MyCarService.AuthService
+﻿namespace MyCarService.AuthServices
 {
     public class AuthData
     {

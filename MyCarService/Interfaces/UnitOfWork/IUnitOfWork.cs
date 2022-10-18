@@ -1,6 +1,7 @@
-﻿using MyCarService.Models.DatabaseModels;
+﻿using MyCarService.Interfaces.Repository;
+using MyCarService.Models.DatabaseModels;
 
-namespace MyCarService.Interfaces
+namespace MyCarService.Interfaces.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyCarService.AuthService;
-using MyCarService.Interfaces;
+using MyCarService.AuthServices;
+using MyCarService.Interfaces.Auth;
+using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.Auth;
 using MyCarService.Models.DatabaseModels;
 using MyCarService.Repositories;
@@ -11,70 +12,34 @@ namespace MyCarService.Controllers
     [Route("auth")]
     public class AuthController : Controller
     {
-        readonly IAuthService _authService;
-        readonly IUnitOfWork _unitOfWork;
-        public AuthController(IAuthService authService, IUnitOfWork unitOfWork)
+        readonly IAuthUnit _authUnit;
+        public AuthController( IAuthUnit authUnit)
         {
-            _authService = authService;
-            _unitOfWork = unitOfWork;
+            _authUnit = authUnit;
         }
 
         [HttpPost("register")]
-        public ActionResult<AuthData> Register(UserRegistration user)
+        public ActionResult<AuthData> Register(UserAuth user)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var result = _authUnit.RegisterUser(user);
 
-            if (user.Email == null) return BadRequest(new { email = "emial is not provided" });
-            var emailUniq = _unitOfWork.UserRepository.IsEmailUniq(user.Email);
-            if (!emailUniq) return BadRequest(new { email = "user with this email already exists" });
-            if (user.Password == null) return BadRequest(new { email = "Password is not provided" });
-
-            var id = Guid.NewGuid().ToString();
-            var newUser = new User
+            if (result.IsFail())
             {
-                Id = id,
-                Username = user.Username,
-                Email = user.Email,
-                Salt = AuthSaltGenerator.GetUniqueKey(32),
-                Password = ""
-            };
-            string password = user.Username + user.Password + newUser.Salt;
-            newUser.Password = _authService.HashPassword(password);
-            _unitOfWork.UserRepository.Add(newUser);
-            try
-            {
-                _unitOfWork.Complete();
+                return BadRequest(new { error = result.GetError() });
             }
-            catch
-            {
-                _unitOfWork.Dispose();
-                return BadRequest(new { registery = "Registery has failed" });
-            }
-
-            return _authService.GetAuthData(newUser.Id);
+            return Ok(result.GetSuccess());
         }
 
         [HttpPost("login")]
-        public ActionResult<AuthData> Post(UserRegistration user)
+        public ActionResult<AuthData> Login(UserAuth user)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var result = _authUnit.LoginUser(user);
 
-            var userByEmail = _unitOfWork.UserRepository.Find(u => u.Email == user.Email).FirstOrDefault();
-
-            if (userByEmail == null)
+            if (result.IsFail())
             {
-                return BadRequest(new { email = "no user with this email" });
+                return BadRequest(new { error = result.GetError() });
             }
-            if (userByEmail.Password == null || user.Password == null) return BadRequest(new { password = "password is empty" });
-            string password = user.Username + user.Password + userByEmail.Salt;
-
-            var passwordValid = _authService.VerifyPassword(password, userByEmail.Password);
-            if (!passwordValid)
-            {
-                return BadRequest(new { password = "invalid password" });
-            }
-
-            return _authService.GetAuthData(userByEmail.Id);
+            return Ok(result.GetSuccess());
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using MyCarService.AuthService;
+﻿using MyCarService.AuthServices;
 
-namespace MyCarService.Interfaces
+namespace MyCarService.Interfaces.Auth
 {
     public interface IAuthService
     {

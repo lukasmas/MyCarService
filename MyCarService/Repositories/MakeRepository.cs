@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyCarService.Interfaces;
+using MyCarService.Interfaces.Repository;
 using MyCarService.Models;
 using MyCarService.Models.DatabaseModels;
 

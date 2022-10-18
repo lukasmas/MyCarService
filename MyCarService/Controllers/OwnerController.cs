@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyCarService.Interfaces;
+using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.DatabaseModels;
 using System.Net;
 using System.Security.Claims;

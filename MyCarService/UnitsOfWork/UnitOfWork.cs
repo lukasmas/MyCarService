@@ -9,6 +9,7 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(MyCarServiceContext context)
     {
         _context = context;
+
         ModelRepository = new ModelRepository(_context);
         MakeRepository = new MakeRepository(_context);
         OwnerRepository = new OwnerRepository(_context);

@@ -4,6 +4,7 @@ using MyCarService.ErrorHandling;
 using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.DatabaseModels;
 using System.Net;
+using System.Security.Claims;
 
 namespace MyCarService.Controllers
 {
@@ -27,11 +28,20 @@ namespace MyCarService.Controllers
             return Ok(result.GetSuccess());
         }
 
-        [Route("vehicles/{ownerId}")]
+        [Route("vehicles")]
         [HttpGet]
-        public ActionResult GetAll(long ownerId)
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult GetAll()
         {
-            return Ok(_vehicleUnitOfWork.VehicleRepository.GetAllOwnerVehicles(ownerId));
+            var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            var ownerId = _vehicleUnitOfWork.UserRepository.Find(u => u.Id == id).First().OwnerId;
+
+            if (ownerId == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_vehicleUnitOfWork.VehicleRepository.GetAllOwnerVehicles((long)ownerId!));
         }
 
         [Route("delete/{vehicleId}")]

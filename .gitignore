@@ -1,3 +1,5 @@
 ﻿.vs/
 MyCarService/obj/
 MyCarService/bin/
+MyCarService.Tests/obj/
+MyCarService.Tests/bin/

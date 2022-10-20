@@ -23,7 +23,9 @@ jobs:
       - run:
           name: "Install tool to collect test results"
           when: always
-          command: dotnet.exe tool install -g trx2junit
+          PATH: '/root/.dotnet/tools:$PATH'
+          command: |
+            dotnet tool install -g trx2junit
       - run:
           name: "Build Application Tests"
           command: dotnet.exe build
@@ -44,11 +46,21 @@ jobs:
       name: windows/default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - dotnet-packages-v1-{{ checksum "MyCarService/MyCarService.csproj" }}
+      - run:
+          name: "Install project dependencies"
+          command: dotnet.exe restore
+      - save_cache:
+          paths:
+            - C:\Users\circleci\.nuget\packages
+          key: dotnet-packages-v1-{{ checksum "MyCarService/MyCarService.csproj" }}
       - run:
           name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release
+          command: dotnet.exe build
 workflows:
   test_and_build:
     jobs:
-      - test
       - build
+      - test

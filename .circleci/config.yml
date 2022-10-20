@@ -31,10 +31,10 @@ jobs:
           when: always
           command: 
             dotnet tool install -g trx2junit
-            echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
+            $env:Path += ';/root/.dotnet/tools'
       - run:
           name: "Conver .trx to .xml"
-          command: trx2junit .\MyCarService.Tests\TestResults\*.trx
+          command: trx2junit.exe .\MyCarService.Tests\TestResults\*.trx
       - run:
           name: "Print Working Directory"
           command: pwd

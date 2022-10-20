@@ -18,15 +18,15 @@ namespace MyCarService.UnitsOfWork
         {
             if (!ChechIfDataNotNull(userAuth))
             {
-                return new Result<AuthData, Error>(new Error("Some fields are missing"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DataIsNull, "Some fields are missing"));
             }
             if (!UserRepository.IsEmailUniq(userAuth.Email!))
             {
-                return new Result<AuthData, Error>(new Error("Email already in use!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DataNotUnique, "Email already in use!"));
             }
             if (!UserRepository.IsUsernameUniq(userAuth.Username!))
             {
-                return new Result<AuthData, Error>(new Error("Username already in use!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DataNotUnique, "Username already in use!"));
             }
 
             var id = Guid.NewGuid().ToString();
@@ -48,7 +48,7 @@ namespace MyCarService.UnitsOfWork
             catch
             {
                 Dispose();
-                return new Result<AuthData, Error>(new Error("Registery has failed!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DatabaseError, "Registery has failed!"));
             }
 
             return new Result<AuthData, Error>(_authService.GetAuthData(newUser.Id));
@@ -58,25 +58,25 @@ namespace MyCarService.UnitsOfWork
 
             if (!CheckIfEmailOrUsernameNotNull(userAuth))
             {
-                return new Result<AuthData, Error>(new Error("Email and username empty!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DataIsNull,"Email and username empty!"));
             }
 
             User? loginUser = TryToGetUserByEmailOrUsername(userAuth);
 
             if (loginUser == null)
             {
-                return new Result<AuthData, Error>(new Error("Invalid login or email!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.InvalidData,"Invalid login or email!"));
             }
             if (userAuth.Password == null)
             {
-                return new Result<AuthData, Error>(new Error("Invalid password!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DataIsNull, "Empty password!"));
             }
             string password = loginUser.Username + userAuth.Password + loginUser.Salt;
 
             var passwordValid = _authService.VerifyPassword(password, loginUser.Password!);
             if (!passwordValid)
             {
-                return new Result<AuthData, Error>(new Error("Invalid password!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.InvalidData, "Invalid password!"));
 
             }
 

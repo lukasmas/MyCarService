@@ -13,9 +13,9 @@ namespace MyCarService.UnitsOfWork
         public IResult<Vehicle, Error> AddNewVehicle(Vehicle vehicle)
         {
             if (ModelRepository.GetById(vehicle.ModelId) == null)
-                return new Result<Vehicle, Error>(new Error("Bad modelId"));
+                return new Result<Vehicle, Error>(new Error(ErrorCode.InvalidData,"Bad modelId"));
             if (OwnerRepository.GetById(vehicle.OwnerId) == null)
-                return new Result<Vehicle, Error>(new Error("Bad ownerId"));
+                return new Result<Vehicle, Error>(new Error(ErrorCode.InvalidData, "Bad ownerId"));
 
             VehicleRepository.Add(vehicle);
             Complete();
@@ -29,7 +29,7 @@ namespace MyCarService.UnitsOfWork
             var vehicle = VehicleRepository.GetById(vehicleId);
             if (vehicle == null)
             {
-                return new Result<Vehicle, Error>(new Error("Vehicle dosen't exits"));
+                return new Result<Vehicle, Error>(new Error(ErrorCode.InvalidData, "Vehicle dosen't exits"));
 
             }
             vehicle.CurrentMillage = newMillage;
@@ -42,7 +42,7 @@ namespace MyCarService.UnitsOfWork
             var vehicle = VehicleRepository.GetById(vehicleId);
             if (vehicle == null)
             {
-                return new Result<Vehicle, Error>(new Error("Vehicle dosen't exits"));
+                return new Result<Vehicle, Error>(new Error(ErrorCode.InvalidData, "Vehicle dosen't exits"));
 
             }
             VehicleRepository.Remove(vehicle);

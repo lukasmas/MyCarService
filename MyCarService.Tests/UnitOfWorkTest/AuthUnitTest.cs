@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using MyCarService.AuthServices;
+using MyCarService.ErrorHandling;
 using MyCarService.Interfaces.Auth;
 using MyCarService.Models.Auth;
 using MyCarService.Models.DatabaseModels;
@@ -103,7 +104,8 @@ namespace MyCarService.Tests.UnitOfWorkTest
             var result = authUnit.LoginUser(userLoginData);
 
             Assert.True(result.IsFail());
-            Assert.Equal("Invalid password!", result.GetError()!.ErrorMessage);
+            Assert.Equal(ErrorCode.InvalidData, result.GetError()!.ErrorCode);
+
         }
 
         [Fact]
@@ -127,7 +129,7 @@ namespace MyCarService.Tests.UnitOfWorkTest
             var result = authUnit.LoginUser(userLoginData);
 
             Assert.True(result.IsFail());
-            Assert.Equal("Invalid login or email!", result.GetError()!.ErrorMessage);
+            Assert.Equal(ErrorCode.InvalidData, result.GetError()!.ErrorCode);
         }
         [Fact]
         public void LoginUser_EmailIsWrong()
@@ -150,7 +152,8 @@ namespace MyCarService.Tests.UnitOfWorkTest
             var result = authUnit.LoginUser(userLoginData);
 
             Assert.True(result.IsFail());
-            Assert.Equal("Invalid login or email!", result.GetError()!.ErrorMessage);
+            Assert.Equal(ErrorCode.InvalidData, result.GetError()!.ErrorCode);
+
         }
 
         [Fact]
@@ -174,7 +177,8 @@ namespace MyCarService.Tests.UnitOfWorkTest
             var result = authUnit.LoginUser(userLoginData);
 
             Assert.True(result.IsFail());
-            Assert.Equal("Email and username empty!", result.GetError()!.ErrorMessage);
+            Assert.Equal(ErrorCode.DataIsNull, result.GetError()!.ErrorCode);
+
         }
         [Fact]
         public void LoginUser_PasswordIsNull()
@@ -197,7 +201,8 @@ namespace MyCarService.Tests.UnitOfWorkTest
             var result = authUnit.LoginUser(userLoginData);
 
             Assert.True(result.IsFail());
-            Assert.Equal("Invalid password!", result.GetError()!.ErrorMessage);
+            Assert.Equal(ErrorCode.DataIsNull, result.GetError()!.ErrorCode);
+
         }
     }
 }

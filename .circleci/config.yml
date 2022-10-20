@@ -30,11 +30,14 @@ jobs:
       - run:
           name: "Run Application Tests"
           command: dotnet.exe test --no-build --logger "trx"
+      -run:
+          name: "Conver .trx to .xml"
+          command: trx2junit .\MyCarService.Tests\TestResults/*.trx
       - run:
           name: "Print Working Directory"
           command: pwd
       - store_test_results:
-          path: C:\Users\circleci.PACKER-633B1A5A\project\MyCarService.Tests\TestResults
+          path: .\MyCarService.Tests\TestResults
   build:
     description: Build application with Release configuration
     executor:

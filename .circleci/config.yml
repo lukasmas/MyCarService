@@ -30,7 +30,7 @@ jobs:
       - run:
           name: "Run Application Tests"
           command: dotnet.exe test --no-build --logger "trx"
-      -run:
+      - run:
           name: "Conver .trx to .xml"
           command: trx2junit .\MyCarService.Tests\TestResults/*.trx
       - run:

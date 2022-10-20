@@ -29,7 +29,9 @@ jobs:
       - run:
           name: "Install tool to collect test results"
           when: always
-          command: dotnet tool install -g trx2junit
+          command: 
+            dotnet tool install -g trx2junit
+            echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
       - run:
           name: "Conver .trx to .xml"
           command: trx2junit .\MyCarService.Tests\TestResults\*.trx

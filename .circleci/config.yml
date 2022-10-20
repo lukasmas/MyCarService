@@ -21,19 +21,20 @@ jobs:
             - C:\Users\circleci\.nuget\packages
           key: dotnet-packages-v1-{{ checksum "MyCarService.Tests/MyCarService.Tests.csproj" }}
       - run:
+          name: "Install tool to collect test results"
+          when: always
+          command: dotnet.exe tool install -g trx2junit
+      - run:
+          name: "Build Application Tests"
+          command: dotnet.exe build
+      - run:
           name: "Run Application Tests"
-          command: dotnet.exe test --logger "trx"
+          command: dotnet.exe test --no-build --logger "trx"
       - run:
           name: "Print Working Directory"
           command: pwd
-      - run:
-          name: test results
-          when: always
-          command: |
-              dotnet tool install -g trx2junit
-              trx2junit tests/**/TestResults/*.trx
       - store_test_results:
-          path: tests/TestResults
+          path: C:\Users\circleci\project\TestResults
   build:
     description: Build application with Release configuration
     executor:
@@ -47,6 +48,4 @@ workflows:
   test_and_build:
     jobs:
       - test
-      - build:
-          requires:
-            - test
+      - build

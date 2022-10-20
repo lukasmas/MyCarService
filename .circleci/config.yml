@@ -25,7 +25,7 @@ jobs:
           command: dotnet.exe build
       - run:
           name: "Run Application Tests"
-          command: dotnet.exe test --no-build --logger "trx" --results-directory "..\TestResults"    
+          command: dotnet.exe test --no-build --logger "trx" --results-directory ".\TestResults\"    
       - run:
           name: "Install tool to collect test results"
           when: always

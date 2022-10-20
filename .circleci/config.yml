@@ -33,10 +33,10 @@ jobs:
             dotnet tool install --tool-path . trx2junit  
       - run:
           name: "Conver .trx to .xml"
-          command: trx2junit.exe .\MyCarService.Tests\TestResults\*.trx
+          command: .\trx2junit.exe .\MyCarService.Tests\TestResults\*.trx
       - run:
           name: "Print Working Directory"
-          command: pwd
+          command: ls
       - store_test_results:
           path: .\MyCarService.Tests\TestResults\
   build:

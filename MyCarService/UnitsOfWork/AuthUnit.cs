@@ -31,6 +31,11 @@ namespace MyCarService.UnitsOfWork
                 return new Result<AuthData, Error>(new Error(ErrorCode.DataNotUnique, "Username already in use!"));
             }
 
+            var ploteczki = new List<string> { "kinga  ma kota", "lukasz kocha kota" };
+
+
+            var prawdyObjawione = ploteczki.Select(IsRummorTrue);
+
 
             var id = Guid.NewGuid().ToString();
             var newUser = new User
@@ -56,6 +61,7 @@ namespace MyCarService.UnitsOfWork
 
             return new Result<AuthData, Error>(_authService.GetAuthData(newUser.Id));
         }
+        private bool IsRummorTrue(string plotka) => string.IsNullOrEmpty(plotka);
         public Result<AuthData, Error> LoginUser(UserAuth userAuth)
         {
 

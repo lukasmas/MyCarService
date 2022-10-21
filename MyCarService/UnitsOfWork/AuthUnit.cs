@@ -4,6 +4,7 @@ using MyCarService.Interfaces.Auth;
 using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.Auth;
 using MyCarService.Models.DatabaseModels;
+using MyCarService.Validators;
 
 namespace MyCarService.UnitsOfWork
 {
@@ -16,9 +17,10 @@ namespace MyCarService.UnitsOfWork
         }
         public Result<AuthData, Error> RegisterUser(UserAuth userAuth)
         {
-            if (!ChechIfDataNotNull(userAuth))
+            var validationResult = UserDataValidator.ValidateUserAuthData(userAuth);
+            if (validationResult != null)
             {
-                return new Result<AuthData, Error>(new Error(ErrorCode.DataIsNull, "Some fields are missing"));
+                return new Result<AuthData, Error>(validationResult);
             }
             if (!UserRepository.IsEmailUniq(userAuth.Email!))
             {
@@ -28,6 +30,7 @@ namespace MyCarService.UnitsOfWork
             {
                 return new Result<AuthData, Error>(new Error(ErrorCode.DataNotUnique, "Username already in use!"));
             }
+
 
             var id = Guid.NewGuid().ToString();
             var newUser = new User
@@ -56,16 +59,16 @@ namespace MyCarService.UnitsOfWork
         public Result<AuthData, Error> LoginUser(UserAuth userAuth)
         {
 
-            if (!CheckIfEmailOrUsernameNotNull(userAuth))
+            if (!UserDataValidator.CheckIfEmailOrUsernameNotNull(userAuth))
             {
-                return new Result<AuthData, Error>(new Error(ErrorCode.DataIsNull,"Email and username empty!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.DataIsNull, "Email and username empty!"));
             }
 
             User? loginUser = TryToGetUserByEmailOrUsername(userAuth);
 
             if (loginUser == null)
             {
-                return new Result<AuthData, Error>(new Error(ErrorCode.InvalidData,"Invalid login or email!"));
+                return new Result<AuthData, Error>(new Error(ErrorCode.InvalidData, "Invalid login or email!"));
             }
             if (userAuth.Password == null)
             {
@@ -84,21 +87,6 @@ namespace MyCarService.UnitsOfWork
 
         }
 
-        private bool ChechIfDataNotNull(UserAuth userAuth)
-        {
-            if (userAuth.Email == null || userAuth.Username == null || userAuth.Password == null) return false;
-
-            return true;
-        }
-
-        private bool CheckIfEmailOrUsernameNotNull(UserAuth userAuth)
-        {
-            if (userAuth.Email == null && userAuth.Username == null)
-            {
-                return false;
-            }
-            return true;
-        }
 
         private User? TryToGetUserByEmailOrUsername(UserAuth userAuth)
         {

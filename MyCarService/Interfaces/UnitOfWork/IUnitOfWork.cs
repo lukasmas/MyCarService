@@ -10,6 +10,7 @@ namespace MyCarService.Interfaces.UnitOfWork
         IOwnerRepository OwnerRepository { get; }
         IVehicleRepository VehicleRepository { get; }
         IServiceRepository ServiceRepository { get; }
+        IServiceReminderRepository ServiceReminderRepository { get; }
         IUserRepository UserRepository { get; }
         int Complete();
         public Owner GetOwnerById(long ownerId);

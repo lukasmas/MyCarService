@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using MyCarService.Interfaces.UnitOfWork;
 using MyCarService.Models.DatabaseModels;
 using System.Net;

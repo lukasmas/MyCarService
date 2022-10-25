@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS "Service" (
 	  REFERENCES "Vehicle"("Id")
 );
 
--- INSERT INTO "Service"("VehicleId", "Millage", "ServiceDate","ServiceType", "Description", "InvoiceScan") VALUES(1, 225599, '2022-10-12','Wymiana oleju i filtrów', 'Wymiana oleju w silniku i skrzyni biegów, wymiana filtrów: powietrza, oleju, oleju w skrzyni biegów','')
+INSERT INTO "Service"("VehicleId", "Millage", "ServiceDate","ServiceType", "Description", "InvoiceScan") VALUES(1, 225599, '2022-10-12','Wymiana oleju i filtrów', 'Wymiana oleju w silniku i skrzyni biegów, wymiana filtrów: powietrza, oleju, oleju w skrzyni biegów','')
 CREATE TABLE IF NOT EXISTS "User"(
    "Id" int4 PRIMARY KEY Generated Always as Identity,
    "Username" VARCHAR(20) NOT NULL UNIQUE,
@@ -60,3 +60,18 @@ CREATE TABLE IF NOT EXISTS "User"(
       FOREIGN KEY("OwnerId") 
 	  REFERENCES "Owner"("Id")
 )
+
+CREATE TABLE IF NOT EXISTS "ServiceReminder"(
+   "Id" int4 PRIMARY KEY Generated Always as Identity,
+	"ServiceId" int4 NOT NULL,
+	"InKilometers" int4,
+	"InTime" date,	
+   "Message" VARCHAR(100) NOT NULL,
+	CONSTRAINT fk_service
+      FOREIGN KEY("ServiceId") 
+	  REFERENCES "Service"("Id")
+)
+
+INSERT INTO "ServiceReminder"("ServiceId","InKilometers","InTime","Message") VALUES (1, 40000, '2026-10-12', 'Wymiana oleju w skrzyni biegów');
+select * from "ServiceReminder" join "Service" on "Service"."Id" = "ServiceReminder"."ServiceId" join "Vehicle" on "Vehicle"."Id" = "Service"."VehicleId" 
+

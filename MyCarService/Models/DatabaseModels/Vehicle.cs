@@ -8,9 +8,9 @@ namespace MyCarService.Models.DatabaseModels
     {
         public long Id { get; set; }
         [Required]
-        public long OwnerId { get; set; }
+        public int OwnerId { get; set; }
         [Required]
-        public long ModelId { get; set; }
+        public int ModelId { get; set; }
         [Range(1940,2022)]
         [Required]
         public int ProductionYear { get; set; }
@@ -19,6 +19,6 @@ namespace MyCarService.Models.DatabaseModels
         public string? VIN { get; set; }
         public string? Plate { get; set; }
         [Required]
-        public uint CurrentMillage { get; set; }
+        public uint CurrentMileage { get; set; }
     }
 }

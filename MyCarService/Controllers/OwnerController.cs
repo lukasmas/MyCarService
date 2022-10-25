@@ -69,21 +69,28 @@ namespace MyCarService.Controllers
 
         }
 
-        [Route("get")]
+        [Route("get_all")]
         [HttpGet]
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult Get()
+        public ActionResult GetAll()
         {
             var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
             
             return Ok(_unitOfWork.OwnerRepository.GetAll());
         }
 
-        [Route("get/{ownerId}")]
+        [Route("get")]
         [HttpGet]
-        public ActionResult Get(int ownerId)
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult Get()
         {
-            return Ok(_unitOfWork.OwnerRepository.GetById(ownerId));
+            var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            var ownerId = _unitOfWork.UserRepository.Find(u => u.Id == id).First().OwnerId;
+            if(ownerId == null)
+            {
+                return BadRequest(new { error = "Owner not created for the user" });
+            }
+            return Ok(_unitOfWork.OwnerRepository.GetById((long)ownerId));
         }
     }
 }

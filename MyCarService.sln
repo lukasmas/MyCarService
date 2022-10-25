@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCarService", "MyCarService\MyCarService.csproj", "{724556EC-16CB-4159-B7A3-C60370B66A36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarService.Tests", "MyCarService.Tests\MyCarService.Tests.csproj", "{DAD42343-324E-4ACC-ACD6-348900D16FBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCarService.Tests", "MyCarService.Tests\MyCarService.Tests.csproj", "{DAD42343-324E-4ACC-ACD6-348900D16FBB}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "MyCarService.FrontEnd", "MyCarsSrvice.FrontEnd\MyCarService.FrontEnd.esproj", "{DBB471AB-131F-4D1A-B782-46E75D449AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{DAD42343-324E-4ACC-ACD6-348900D16FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAD42343-324E-4ACC-ACD6-348900D16FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAD42343-324E-4ACC-ACD6-348900D16FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB471AB-131F-4D1A-B782-46E75D449AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB471AB-131F-4D1A-B782-46E75D449AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB471AB-131F-4D1A-B782-46E75D449AA1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DBB471AB-131F-4D1A-B782-46E75D449AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB471AB-131F-4D1A-B782-46E75D449AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB471AB-131F-4D1A-B782-46E75D449AA1}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

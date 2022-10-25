@@ -23,7 +23,7 @@ namespace MyCarService.UnitsOfWork
             return new Result<Vehicle, Error>(vehicle);
         }
 
-        public IResult<Vehicle, Error> UpdateMillage(long vehicleId, uint newMillage)
+        public IResult<Vehicle, Error> UpdateMillage(long vehicleId, uint newMileage)
         {
 
             var vehicle = VehicleRepository.GetById(vehicleId);
@@ -32,7 +32,7 @@ namespace MyCarService.UnitsOfWork
                 return new Result<Vehicle, Error>(new Error(ErrorCode.InvalidData, "Vehicle dosen't exits"));
 
             }
-            vehicle.CurrentMillage = newMillage;
+            vehicle.CurrentMileage = newMileage;
             Complete();
             return new Result<Vehicle, Error>(vehicle);
         }

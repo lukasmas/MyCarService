@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
         OwnerRepository = new OwnerRepository(_context);
         VehicleRepository = new VehicleRepository(_context);
         ServiceRepository = new ServiceRepository(_context);
+        ServiceReminderRepository = new ServiceReminderRepository(_context);
         UserRepository = new UserRepository(_context);
 
     }
@@ -23,6 +24,8 @@ public class UnitOfWork : IUnitOfWork
     public IOwnerRepository OwnerRepository { get; private set; }
     public IVehicleRepository VehicleRepository { get; private set; }
     public IServiceRepository ServiceRepository { get; private set; }
+    public IServiceReminderRepository ServiceReminderRepository { get; private set; }
+
     public IUserRepository UserRepository { get; private set; }
 
 

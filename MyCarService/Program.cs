@@ -28,6 +28,8 @@ builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
 builder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IServiceReminderRepository, ServiceReminderRepository>();
+
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IVehicleUnit, VehicleUnit>();
@@ -57,6 +59,17 @@ builder.Services.AddSingleton<IAuthService>(
                )
            );
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyHeader();
+            policy.AllowAnyMethod();
+            policy.WithOrigins("https://localhost:3000", "0.0.0.0:3000", "127.0.0.1:3000");
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,6 +78,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
